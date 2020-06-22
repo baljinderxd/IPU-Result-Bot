@@ -6,7 +6,8 @@ Feel free to ask any doubt or questions.
 I converted the results pdf to text files for faster execution of the queries.  
 <b>Note:</b> Currently the bot does support results of USIT stdents as they have a seperate result PDF.
 ## Features
-- [x] Cummulative Percentage calculations
+- [x] Semester wise result with percentage, ranks, subject wise marks, and credits.
+- [x] Cummulative Percentage calculations.
 - [x] College wise rank chart.
 - [x] University wise rank chart.
 - [x] Percentage over the semesters charts.
