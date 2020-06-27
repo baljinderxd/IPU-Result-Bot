@@ -3,7 +3,7 @@ const fs = require('fs');
 const readline = require('readline')
 
 
-export const fetch = (msg, res, sendMessage) => {
+function fetch(msg, res, sendMessage) {
 
     a1.post(sendMessage, {
         chat_id: msg.chat.id,
@@ -19,7 +19,7 @@ export const fetch = (msg, res, sendMessage) => {
 
 }
 
-export const getResult = (msg, res, sendMessage, sendAction) => {
+function getResult(msg, res, sendMessage, sendAction) {
 
     var b = false,
         j = 2,
@@ -27,11 +27,11 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
         flag = -1,
         resultOf = msg.text.toString().substr(0, 11),
         sem = msg.text.toString().substr(12),
-        instcode = msg.text.toString().substr(3,3)
+        instcode = msg.text.toString().substr(3, 3)
 
     function displayResult(result, flag, sem, ttl, uni, cllg) {
 
-       
+
 
         if (flag === -1) {
             a1.post(sendMessage, {
@@ -46,24 +46,24 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
                 res.end(err)
             })
         }
-        
+
         let display, per, unirank = 0, cllgrank = 0
         display = 'Name: ' + result[1]
         display += '\nEnrollment No: ' + result[0]
         uni = uni.sort(function (a, b) { return b - a })
-        unirank = uni.indexOf(ttl)+1
+        unirank = uni.indexOf(ttl) + 1
         cllg = cllg.sort(function (a, b) { return b - a })
-        cllgrank = cllg.indexOf(ttl)+1
+        cllgrank = cllg.indexOf(ttl) + 1
 
-        if(sem==='4') {
-            per = ttl/1200*100
+        if (sem === '4') {
+            per = ttl / 1200 * 100
             display += '\nSemester: Fourth'
             display += '\nCredits: ' + result[result.length - 2]
             display += '\nTotal Marks: ' + ttl.toString() + '/1200'
             display += '\nPercentage: ' + per.toFixed(2) + '%'
             display += '\nCollege Rank: ' + cllgrank
             display += '\nUniversity Rank: ' + unirank
-         + '\n\n<pre>Subject | Marks'
+                + '\n\n<pre>Subject | Marks'
                 + '\n--------|--------'
                 + '\nAM-IV   | ' + result[result.indexOf('27204(4)') - 1]
                 + '\n--------|--------'
@@ -90,15 +90,15 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
                 + '\nOOP LAB | ' + result[result.length - 3] + '</pre>'
         }
 
-        else if(sem==='3') {
-            per = ttl/1000*100
+        else if (sem === '3') {
+            per = ttl / 1000 * 100
             display += '\nSemester: Third'
             display += '\nCredits: ' + result[result.length - 2]
             display += '\nTotal Marks: ' + ttl.toString() + '/1000'
             display += '\nPercentage: ' + per.toFixed(2) + '%'
             display += '\nCollege Rank: ' + cllgrank
             display += '\nUniversity Rank: ' + unirank
-         + '\n\n<pre>Subject | Marks'
+                + '\n\n<pre>Subject | Marks'
                 + '\n--------|--------'
                 + '\nAM-III  | ' + result[result.indexOf('27203(4)') - 1]
                 + '\n--------|--------'
@@ -119,18 +119,18 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
                 + '\nCGM LAB | ' + result[result.indexOf('49257(1)') - 1]
                 + '\n--------|--------'
                 + '\nCS LAB  | ' + result[result.length - 3] + '</pre>'
-               
+
         }
 
-        else if(sem==='2') {
-            per = ttl/1200*100
+        else if (sem === '2') {
+            per = ttl / 1200 * 100
             display += '\nSemester: Second'
             display += '\nCredits: ' + result[result.length - 2]
             display += '\nTotal Marks: ' + ttl.toString() + '/1200'
             display += '\nPercentage: ' + per.toFixed(2) + '%'
             display += '\nCollege Rank: ' + cllgrank
             display += '\nUniversity Rank: ' + unirank
-         + '\n\n<pre>Subject | Marks'
+                + '\n\n<pre>Subject | Marks'
                 + '\n--------|--------'
                 + '\nAM-II   | ' + result[result.indexOf('99104(3)') - 1]
                 + '\n--------|--------'
@@ -155,18 +155,18 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
                 + '\nEM LAB  | ' + result[result.indexOf('56160(1)') - 1]
                 + '\n--------|--------'
                 + '\nEVS LAB | ' + result[result.length - 3] + '</pre>'
-            
+
         }
 
-        else if(sem==='1') {
-            per = ttl/1300*100
+        else if (sem === '1') {
+            per = ttl / 1300 * 100
             display += '\nSemester: First'
             display += '\nCredits: ' + result[result.length - 2]
             display += '\nTotal Marks: ' + ttl.toString() + '/1300'
             display += '\nPercentage: ' + per.toFixed(2) + '%'
             display += '\nCollege Rank: ' + cllgrank
             display += '\nUniversity Rank: ' + unirank
-         + '\n\n<pre>Subject | Marks'
+                + '\n\n<pre>Subject | Marks'
                 + '\n--------|--------'
                 + '\nAM-I    | ' + result[result.indexOf('99103(3)') - 1]
                 + '\n--------|--------'
@@ -195,23 +195,23 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
                 + '\nAC LAB  | ' + result[result.length - 3] + '</pre>'
         }
 
-        if(flag===1){
-            
-        display+="\n\nReport any inconsistency\nin your result by using\n/feedback command.\n"+
-        "Use /cummulative\ncommand to get your\ncummulative percentage."
-        a1.post(sendMessage, {
-            chat_id: msg.chat.id,
-            text: display,
-            parse_mode: 'HTML'
-        }).then(response => {
-            res.end('ok')
-        }).catch(err => {
-            console.log(err)
-            res.end(err)
-        })
-    }
+        if (flag === 1) {
 
- }
+            display += "\n\nReport any inconsistency\nin your result by using\n/feedback command.\n" +
+                "Use /cummulative\ncommand to get your\ncummulative percentage."
+            a1.post(sendMessage, {
+                chat_id: msg.chat.id,
+                text: display,
+                parse_mode: 'HTML'
+            }).then(response => {
+                res.end('ok')
+            }).catch(err => {
+                console.log(err)
+                res.end(err)
+            })
+        }
+
+    }
 
 
 
@@ -222,17 +222,17 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
     }).then(response => {
 
         async function processLineByLine() {
-            const fileStream = fs.createReadStream(__dirname + '/sem'+sem+'17.txt');
+            const fileStream = fs.createReadStream(__dirname + '/sem' + sem + '17.txt');
             const rl = readline.createInterface({
                 input: fileStream,
                 crlfDelay: Infinity
             });
 
             var booluni = false, boolcllg = false,
-            rankuni = [], rankcllg = [],
-            cntrluni = 2, cntrlcllg = 2, stdntttl = 0,
-            tempttluni = 0, tempttlcllg = 0, sbjct = 0,
-            regex = new RegExp('^[0-9]{3}' + instcode + '[0-9]{3}1[7|8]$')
+                rankuni = [], rankcllg = [],
+                cntrluni = 2, cntrlcllg = 2, stdntttl = 0,
+                tempttluni = 0, tempttlcllg = 0, sbjct = 0,
+                regex = new RegExp('^[0-9]{3}' + instcode + '[0-9]{3}1[7|8]$')
 
 
             for await (const line of rl) {
@@ -257,10 +257,10 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
                     if (line.match(/^[0-9]{1,3}\([A-P].*\).*$/)) {
                         sbjct = line.substr(0, line.indexOf('('))
                         tempttluni += parseInt(sbjct, 10)
-        
+
                     }
-                    if (line.match(/^[0-9]{9}1[1-9]$/g)||line==='(END OF LINE)') {
-        
+                    if (line.match(/^[0-9]{9}1[1-9]$/g) || line === '(END OF LINE)') {
+
                         cntrluni--
                         if (cntrluni === 0) {
                             if (!rankuni.includes(tempttluni))
@@ -276,22 +276,22 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
                     if (line.match(/^[0-9]{1,3}\([A-P].*\).*$/)) {
                         sbjct = line.substr(0, line.indexOf('('))
                         tempttlcllg += parseInt(sbjct, 10)
-        
+
                     }
-                    if (line.match(regex)||line.match(/^\(.+\)$/)) {
-        
+                    if (line.match(regex) || line.match(/^\(.+\)$/)) {
+
                         cntrlcllg--
                         if (cntrlcllg === 0) {
                             if (!rankcllg.includes(tempttlcllg))
                                 rankcllg.push(tempttlcllg)
                             tempttlcllg = 0
                             cntrlcllg = 1
-                            if(line.match(/^\(.+\)$/))
-                            boolcllg = false
+                            if (line.match(/^\(.+\)$/))
+                                boolcllg = false
                         }
                     }
                 }
-                
+
 
             }
 
@@ -308,4 +308,9 @@ export const getResult = (msg, res, sendMessage, sendAction) => {
     })
 
 
+}
+
+module.exports = {
+    fetch,
+    getResult
 }

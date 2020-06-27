@@ -2,7 +2,7 @@ const a5 = require('axios')
 const fs1 = require('fs');
 const readline1 = require('readline')
 
-export const cummul = (message, res, sendMessage) => {
+function cummul(message, res, sendMessage) {
     a5.post(sendMessage, {
         chat_id: message.chat.id,
         text: `Please send your enrollment number`,
@@ -17,7 +17,7 @@ export const cummul = (message, res, sendMessage) => {
     })
 }
 
-export const cummulData = (message, res, sendMessage, sendPhoto) => {
+function cummulData(message, res, sendMessage, sendPhoto) {
 
     function displayCummuResult(flagarray, ttlmarks, cllgrank, unirank) {
         var percentage = [], sem = [], cmarks = 0, divider = 0
@@ -208,4 +208,9 @@ export const cummulData = (message, res, sendMessage, sendPhoto) => {
     }
 
     processLineByLine()
+}
+
+module.exports = {
+    cummul,
+    cummulData
 }

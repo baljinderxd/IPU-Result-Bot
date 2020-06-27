@@ -1,7 +1,7 @@
-import { welcome } from "./cse/start";
-import { fetch, getResult } from "./cse/result";
-import { gethelp, sendhelp, feedback, sendfeedback, senderror } from "./cse/help";
-import { cummul, cummulData } from "./cse/cummulative";
+const { welcome } = require('./cse/start');
+const { fetch, getResult } = require('./cse/result');
+const { gethelp, sendhelp, feedback, sendfeedback, senderror } = require('./cse/help');
+const { cummul, cummulData } = require('./cse/cummulative');
 
 require('dotenv').config();
 var express = require('express')
