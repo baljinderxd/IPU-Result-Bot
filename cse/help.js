@@ -1,14 +1,14 @@
 const a3 = require('axios')
 
-export const sendfeedback = (message, res, sendMessage) => {
+export const sendfeedback = (message, res, sendMessage, myUserID) => {
     a3.post(sendMessage, {
-        chat_id: '<YOUR_USER_ID>',
+        chat_id: myUserID,
         text: '---Feedback/Query---\n' +
             'From User ID: ' + message.chat.id + '\n' +
             '\n---Message---'
     }).then(response => {
         a3.post(sendMessage, {
-            chat_id: '<YOUR_USER_ID>',
+            chat_id: myUserID,
             text: message.text
         }).then(response => {
             a3.post(sendMessage, {
@@ -29,6 +29,7 @@ export const sendfeedback = (message, res, sendMessage) => {
         res.end(err)
     })
 }
+
 export const feedback = (message, res, sendMessage) => {
     a3.post(sendMessage,{
         chat_id: message.chat.id,
@@ -44,7 +45,7 @@ export const feedback = (message, res, sendMessage) => {
     })
 }
 
-export const sendhelp = (msg, res, sendMessage) => {
+export const sendhelp = (msg, res, sendMessage, myUserID) => {
     var sendhelptoid = msg.text.match(/[0-9]+/).toString()
     var helpmsgstart = msg.text.search(/[0-9]+/)
     var helpmessage = msg.text.substr(helpmsgstart + sendhelptoid.length)
@@ -53,7 +54,7 @@ export const sendhelp = (msg, res, sendMessage) => {
         text: 'Reply to your query:\n' + helpmessage
     }).then(response => {
             a3.post(sendMessage, {
-                chat_id: '<YOUR_USER_ID>',
+                chat_id: myUserID,
                 text: 'Message sent to: ' + sendhelptoid
             }).then(response => {
                 res.end('ok')

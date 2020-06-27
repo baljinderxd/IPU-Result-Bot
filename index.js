@@ -3,6 +3,7 @@ import { fetch, getResult } from "./cse/result";
 import { gethelp, sendhelp, feedback, sendfeedback, senderror } from "./cse/help";
 import { cummul, cummulData } from "./cse/cummulative";
 
+require('dotenv').config();
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
@@ -13,7 +14,8 @@ app.use(
         extended: true
     })
 )
-const botToken = '<YOUR_BOT_TOKEN>'
+const botToken = process.env.BOT_TOKEN
+const myUserID = process.env.YOUR_CHAT_ID
 const sendMessage = 'https://api.telegram.org/bot' + botToken + '/sendMessage'
 const sendAction = 'https://api.telegram.org/bot' + botToken + '/sendChatAction'
 const sendPhoto = 'https://api.telegram.org/bot' + botToken + '/sendPhoto'
@@ -43,7 +45,10 @@ app.post('/', function (req, res) {
         feedback(message, res, sendMessage)
     }
     else if (message.text.match(/^\/sendhelp\s[0-9]+\s/gi)) {
-        sendhelp(message, res, sendMessage)
+        if (message.chat.id.toString() === myUserID)
+            sendhelp(message, res, sendMessage, myUserID)
+        else
+            senderror(message, res, sendMessage)
     }
     else if (message.text === '/cummulative') {
         cummul(message, res, sendMessage)
@@ -51,7 +56,7 @@ app.post('/', function (req, res) {
     else if (flag === 1) {
 
         if (message.reply_to_message.text === 'Please enter your feedback and send') {
-            sendfeedback(message, res, sendMessage)
+            sendfeedback(message, res, sendMessage, myUserID)
         }
         else if (message.reply_to_message.text === 'Please send your enrollment number') {
             if (message.text.match(/^[0-9]{11}$/))
