@@ -14,3 +14,4 @@ I converted the results pdf to text files for faster execution of the queries.
 - [ ] Comparison between students charts
 - [ ] Support for backlogs.
 - [ ] Support for migration case students.
+- [ ] Show internal and external marks in graph.
