@@ -19,7 +19,7 @@ function fetch(msg, res, sendMessage) {
 
 }
 
-function getResult(msg, res, sendMessage, sendAction) {
+function getResult(msg, res, sendMessage, sendAction, sendPhoto) {
 
     var b = false,
         j = 2,
@@ -55,7 +55,54 @@ function getResult(msg, res, sendMessage, sendAction) {
         cllg = cllg.sort(function (a, b) { return b - a })
         cllgrank = cllg.indexOf(ttl) + 1
 
+        let semSubject = [], semInt = [], semExt = []
+
+        for (let i = 4; i < result.length - 2; i++) {
+            if (result[i].match(/(\d{1,2}|-|A)\s+([0-9]{1,3}|A)/g)) {
+
+                let temp = result[i].match(/\d{1,3}|-|A/g)
+
+                if (temp[0] === '-' || temp[0] === 'A' || temp[0] === '0')
+                    semInt.push('')
+                else
+                    semInt.push(temp[0])
+
+                if (temp[1] === '-' || temp[1] === 'A' || temp[1] === '0')
+                    semExt.push('')
+                else
+                    semExt.push(temp[1])
+            }
+
+            else if (result[i].match(/A|-|[0-9]{1,2}/) && result[i + 2].match(/^([0-9]{1,3}\([A-P].*\).*)|A$/)
+                && result[i - 1].match(/^[0-9]{4,5}\([0-9]\)$/)) {
+
+                let temp = result[i].match(/A|-|[0-9]{1,2}/g)
+
+                if (temp[0] === 'A' || temp[0] === '-' || temp[0] === '0')
+                    semInt.push('')
+                else
+                    semInt.push(temp)
+
+            }
+
+            else if (result[i].match(/A|-|[0-9]{1,3}/) && result[i + 1].match(/(^[0-9]{1,3}\([A-P].*\).*)|A$/)
+                && result[i - 2].match(/^[0-9]{4,5}\([0-9]\)$/)) {
+
+                let temp = result[i].match(/A|-|[0-9]{1,3}/g)
+
+                if (temp[0] === 'A' || temp[0] === '-' || temp[0] === '0')
+                    semExt.push('')
+                else
+                    semExt.push(temp)
+
+
+
+            }
+        }
+
         if (sem === '4') {
+            semSubject = ["'AM-IV'", "'COA'", "'TOC'", "'DBMS'", "'OOP'", "'CS'",
+                "'NCC/NSS'", "'AM LAB'", "'COA LAB'", "'DBMS LAB'", "'CS LAB'", "'OOP LAB'"]
             per = ttl / 1200 * 100
             display += '\nSemester: Fourth'
             display += '\nCredits: ' + result[result.length - 2]
@@ -195,16 +242,39 @@ function getResult(msg, res, sendMessage, sendAction) {
                 + '\nAC LAB  | ' + result[result.length - 3] + '</pre>'
         }
 
+        let foto = "https://quickchart.io/chart?h=500&c={type:'horizontalBar',data:{labels:[" + semSubject + "],"
+            + "datasets:[{label:'Internal',data:[" + semInt + "],backgroundColor:'rgb(108, 212, 255)',datalabels: {color: 'black'}},"
+            + "{label:'External',data:[" + semExt + "],backgroundColor:'rgb(255, 158, 0)',datalabels: {color: 'black'}}]},"
+            + "options:{scales:{xAxes:[{stacked: true}],yAxes:[{stacked: true}]},"
+            + "plugins:{datalabels: {display: true,anchor: 'end',align: 'start'}},"
+            + "annotation:{annotations: [{type: 'line',scaleID: 'x-axis-0',value: 40,borderDash: [5, 2],"
+            + "borderDashOffset: 0,borderColor: 'green',borderWidth: 1},{type: 'line',scaleID: 'x-axis-0',value: "+ per.toFixed(2) +",borderDash: [5, 2],"
+            + "borderDashOffset: 0,borderColor: 'red',borderWidth: 1}]},}}"
+
         if (flag === 1) {
 
             display += "\n\nReport any inconsistency\nin your result by using\n/feedback command.\n" +
                 "Use /cummulative\ncommand to get your\ncummulative percentage."
+
             a1.post(sendMessage, {
                 chat_id: msg.chat.id,
                 text: display,
                 parse_mode: 'HTML'
             }).then(response => {
-                res.end('ok')
+                if (semSubject.length > 0) {
+                    a1.post(sendPhoto, {
+                        chat_id: msg.chat.id,
+                        photo: foto,
+                        caption: "Internal-External wise marks\nGreen Line: Passing Marks\nRed Line: Your Percentage"
+                    }).then(response => {
+                        res.end('ok')
+                    }).catch(err => {
+                        console.log(err)
+                        res.end(err)
+                    })
+                }
+                else
+                    res.end('ok')
             }).catch(err => {
                 console.log(err)
                 res.end(err)
@@ -309,7 +379,6 @@ function getResult(msg, res, sendMessage, sendAction) {
 
 
 }
-
 module.exports = {
     fetch,
     getResult

@@ -58,21 +58,21 @@ function cummulData(message, res, sendMessage, sendPhoto) {
         }).then(response => {
             a5.post(sendPhoto, {
                 chat_id: message.chat.id,
-                photo: "https://quickchart.io/chart?width=300&height=200&c={type:'line',data:{labels:[" + sem + "],"
+                photo: "https://quickchart.io/chart?c={type:'line',data:{labels:[" + sem + "],"
                     + "datasets:[{label:'Percentage',data:[" + percentage + "],fill:false,borderColor:'rgb(75, 192, 192)',datalabels: {color: 'black'}}]},"
                     + "options:{plugins:{datalabels: {display: true,anchor: 'end',align: 'start'}}}}",
                 caption: "Percentage Wise Graph"
             }).then(response => {
                 a5.post(sendPhoto, {
                     chat_id: message.chat.id,
-                    photo: "https://quickchart.io/chart?width=300&height=200&c={type:'line',data:{labels:[" + sem + "],"
+                    photo: "https://quickchart.io/chart?c={type:'line',data:{labels:[" + sem + "],"
                         + "datasets:[{label:'College Rank',data:[" + cllgrank + "],fill:false,borderColor:'rgb(75, 192, 192)',datalabels: {color: 'black'}}]},"
                         + "options:{plugins:{datalabels: {display: true,anchor: 'end',align: 'start'}},scales: {yAxes: [{ticks:{reverse: true,beginAtZero:true}}]}}}",
                     caption: "College Rank Wise Graph"
                 }).then(response => {
                     a5.post(sendPhoto, {
                         chat_id: message.chat.id,
-                        photo: "https://quickchart.io/chart?width=300&height=200&c={type:'line',data:{labels:[" + sem + "],"
+                        photo: "https://quickchart.io/chart?c={type:'line',data:{labels:[" + sem + "],"
                             + "datasets:[{label:'University Rank',data:[" + unirank + "],fill:false,borderColor:'rgb(75, 192, 192)',datalabels: {color: 'black'}}]},"
                             + "options:{plugins:{datalabels: {display: true,anchor: 'end',align: 'start'}},scales: {yAxes: [{ticks:{reverse: true,beginAtZero:true}}]}}}",
                         caption: "University Rank Wise Graph"

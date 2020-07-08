@@ -39,7 +39,7 @@ app.post('/', function (req, res) {
         gethelp(message, res, sendMessage)
     }
     else if (message.text.match(/^[0-9]{11}\s[1-4]{1}$/g)) {
-        getResult(message, res, sendMessage, sendAction)
+        getResult(message, res, sendMessage, sendAction, sendPhoto)
     }
     else if (message.text === '/feedback') {
         feedback(message, res, sendMessage)
