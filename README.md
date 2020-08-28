@@ -11,7 +11,7 @@ I converted the results pdf to text files for faster execution of the queries.
 - [x] College wise rank chart.
 - [x] University wise rank chart.
 - [x] Percentage over the semesters charts.
+- [x] Show internal and external marks in graph.
 - [ ] Comparison between students charts
 - [ ] Support for backlogs.
 - [ ] Support for migration case students.
-- [ ] Show internal and external marks in graph.
