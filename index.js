@@ -7,7 +7,8 @@ require('dotenv').config();
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
-const axios = require('axios')
+const axios = require('axios');
+const { compareReply, compareResults } = require('./cse/compare');
 app.use(bodyParser.json())
 app.use(
     bodyParser.urlencoded({
@@ -53,6 +54,9 @@ app.post('/', function (req, res) {
     else if (message.text === '/cummulative') {
         cummul(message, res, sendMessage)
     }
+    else if (message.text === '/compare') {
+        compareReply(message, res, sendMessage)
+    }
     else if (flag === 1) {
 
         if (message.reply_to_message.text === 'Please enter your feedback and send') {
@@ -61,6 +65,14 @@ app.post('/', function (req, res) {
         else if (message.reply_to_message.text === 'Please send your enrollment number') {
             if (message.text.match(/^[0-9]{11}$/))
                 cummulData(message, res, sendMessage, sendPhoto)
+            else {
+                senderror(message, res, sendMessage)
+            }
+        }
+        else if (message.reply_to_message.text === 'Please enter and send two enrollment numbers separated by a space') {
+            if (message.text.match(/^[0-9]{11}.[0-9]{11}$/)) {
+                compareResults(message, res, sendMessage, sendPhoto)
+            }
             else {
                 senderror(message, res, sendMessage)
             }
@@ -74,6 +86,6 @@ app.post('/', function (req, res) {
     }
 })
 
-app.listen(process.env.PORT||3000, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log('Telegram app listening on port 3000!')
 })
