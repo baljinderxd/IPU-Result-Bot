@@ -12,6 +12,9 @@ I converted the results pdf to text files for faster execution of the queries.
 - [x] University wise rank chart.
 - [x] Percentage over the semesters charts.
 - [x] Show internal and external marks in graph.
-- [ ] Comparison between students charts
-- [ ] Support for backlogs.
-- [ ] Support for migration case students.
+## New Ideas To Implement
+i) Comparison between results of students: Two enrollment numbers as input will be processed and bot will send the comparison graphs.
+ii) Saving data to database: Use any database service to save the results instead of using text files.
+iii) Save enrollment number: An option for users to save enrollment numbers to save time by not having to type roll no again and again.
+iv) Adding more to results: Addidng more details like CGPA, SGPA while displaying results.
+v) Backlogs support: Add support for reappear results for correct results of backlog students.
