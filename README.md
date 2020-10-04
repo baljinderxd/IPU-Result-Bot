@@ -15,8 +15,8 @@ I converted the results pdf to text files for faster execution of the queries.
 - [x] Show internal and external marks in graph.
 
 ## New Ideas To Implement
-i) Comparison between results of students: Two enrollment numbers as input will be processed and bot will send the comparison graphs.
-ii) Saving data to database: Use any database service to save the results instead of using text files.
-iii) Save enrollment number: An option for users to save enrollment numbers to save time by not having to type roll no again and again.
-iv) Adding more to results: Addidng more details like CGPA, SGPA while displaying results.
+i) Comparison between results of students: Two enrollment numbers as input will be processed and bot will send the comparison graphs. <br>
+ii) Saving data to database: Use any database service to save the results instead of using text files. <br>
+iii) Save enrollment number: An option for users to save enrollment numbers to save time by not having to type roll no again and again. <br>
+iv) Adding more to results: Addidng more details like CGPA, SGPA while displaying results. <br>
 v) Backlogs support: Add support for reappear results for correct results of backlog students.
