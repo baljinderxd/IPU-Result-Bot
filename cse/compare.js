@@ -3,7 +3,7 @@ const filesys = require('fs');
 const rdline = require('readline');
 
 function compareReply(message, res, sendMessage) {
-    a5.post(sendMessage, {
+    reply.post(sendMessage, {
         chat_id: message.chat.id,
         text: `Please enter and send two enrollment numbers separated by a space`,
         reply_markup: {
@@ -23,8 +23,8 @@ async function processLineByLine(rollNO, rollNo2) {
     var ttlmarks2 = [], flagarray2 = [];
 
     for (let i = 1; i < 5; i++) {
-        const fileStream = fs1.createReadStream(__dirname + '/sem' + i.toString() + '17.txt');
-        const rl = readline1.createInterface({
+        const fileStream = filesys.createReadStream(__dirname + '/sem' + i.toString() + '17.txt');
+        const rl = rdline.createInterface({
             input: fileStream,
             crlfDelay: Infinity
         });
