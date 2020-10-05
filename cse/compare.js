@@ -17,7 +17,7 @@ function compareReply(message, res, sendMessage) {
     });
 }
 
-async function processLineByLine(rollNO, rollNo2) {
+async function processLineByLine(rollNo, rollNo2) {
 
     var ttlmarks = [], flagarray = [];
     var ttlmarks2 = [], flagarray2 = [];
@@ -37,7 +37,7 @@ async function processLineByLine(rollNO, rollNo2) {
         var stdntttl2 = 0, sbjct2 = 0;
 
         for await (const line of rl) {
-            if (line === rollNO || b) {
+            if (line === rollNo || b) {
                 flag = 1
                 b = true
                 if (line.match(/^[0-9]{1,3}\([A|B|C|F|O|P].*\).*$/)) {
@@ -51,7 +51,7 @@ async function processLineByLine(rollNO, rollNo2) {
                     }
                 }
             }
-            if (line === rollNO2 || b2) {
+            if (line === rollNo2 || b2) {
                 flag2 = 1
                 b2 = true
                 if (line.match(/^[0-9]{1,3}\([A|B|C|F|O|P].*\).*$/)) {
