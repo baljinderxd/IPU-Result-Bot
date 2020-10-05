@@ -9,6 +9,7 @@ var app = express()
 var bodyParser = require('body-parser')
 const axios = require('axios');
 const { compareReply, compareResults } = require('./cse/compare');
+const { saveRoll, checkSaved } = require('./cse/saveRoll');
 app.use(bodyParser.json())
 app.use(
     bodyParser.urlencoded({
@@ -57,6 +58,9 @@ app.post('/', function (req, res) {
     else if (message.text === '/compare') {
         compareReply(message, res, sendMessage)
     }
+    else if (message.text === '/save') {
+        checkSaved(message, res, sendMessage, sendAction)
+    }
     else if (flag === 1) {
 
         if (message.reply_to_message.text === 'Please enter your feedback and send') {
@@ -72,6 +76,14 @@ app.post('/', function (req, res) {
         else if (message.reply_to_message.text === 'Please enter and send two enrollment numbers separated by a space') {
             if (message.text.match(/^[0-9]{11}.[0-9]{11}$/)) {
                 compareResults(message, res, sendMessage, sendPhoto)
+            }
+            else {
+                senderror(message, res, sendMessage)
+            }
+        }
+        else if (message.reply_to_message.text === 'Please send me the enrollment number you want to save') {
+            if (message.text.match(/^[0-9]{11}$/)) {
+                saveRoll(message, res, sendMessage, sendAction)
             }
             else {
                 senderror(message, res, sendMessage)
