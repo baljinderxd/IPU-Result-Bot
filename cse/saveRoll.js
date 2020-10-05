@@ -11,7 +11,7 @@ async function checkSaved(message, res, sendMessage, sendAction) {
 
 
     let conn = await MongoClient.connect(url, { useUnifiedTopology: true });
-    let connected = conn.db('users');
+    let connected = conn.db('tempHeroku');
     let result = await connected.collection('savedRollNos').findOne({ userId: message.chat.id });
 
     if (result !== null) {
@@ -54,7 +54,7 @@ function saveRoll(message, res, sendMessage, sendAction) {
     MongoClient.connect(url, { useUnifiedTopology: true }, function (err, conn) {
         if (err) throw err;
 
-        let connected = conn.db('users');
+        let connected = conn.db('tempHeroku');
 
         connected.collection('savedRollNos').findOne({ userId: message.chat.id }, function (err, userFound) {
             if (err) throw err;
