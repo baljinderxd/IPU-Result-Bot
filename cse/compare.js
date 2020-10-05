@@ -164,7 +164,7 @@ async function compareResults(msg, res, sendMessage, sendPhoto) {
         else {
 
             let fin1 = prepareResult(cummRes[0], cummRes[1]);
-            let fin2 = prepareResult(cummRes[3], cummRes[3]);
+            let fin2 = prepareResult(cummRes[2], cummRes[3]);
 
             let sems = [], per1 = [], per2 = [], anchor1 = [], anchor2 = [], align1 = [], align2 = [];
 
