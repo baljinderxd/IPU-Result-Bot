@@ -150,7 +150,7 @@ async function compareResults(msg, res, sendMessage, sendPhoto) {
         let cummRes = await processLineByLine(res1, res2);
 
         if (!cummRes[0].includes(1) || !cummRes[2].includes(1)) {
-            postMsg.post(sendMessage, {
+            reply.post(sendMessage, {
                 chat_id: msg.chat.id,
                 text: 'Sorry graph can not be generated!' +
                     '\nPlease enter correct enrollment numbers or check if stream or batch is included in results or not.'
