@@ -10,6 +10,7 @@ var bodyParser = require('body-parser')
 const axios = require('axios');
 const { compareReply, compareResults } = require('./cse/compare');
 const { saveRoll, checkSaved } = require('./cse/saveRoll');
+const { deleteSaved } = require('./cse/deleteRollNo');
 app.use(bodyParser.json())
 app.use(
     bodyParser.urlencoded({
@@ -60,6 +61,9 @@ app.post('/', function (req, res) {
     }
     else if (message.text === '/save') {
         checkSaved(message, res, sendMessage, sendAction)
+    }
+    else if (message.text === '/delete') {
+        deleteSaved(message, res, sendMessage, sendAction)
     }
     else if (flag === 1) {
 
