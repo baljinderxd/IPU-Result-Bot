@@ -54,7 +54,7 @@ app.post('/', function (req, res) {
             senderror(message, res, sendMessage)
     }
     else if (message.text === '/cummulative') {
-        cummul(message, res, sendMessage)
+        cummul(message, res, sendMessage, sendPhoto)
     }
     else if (message.text === '/compare') {
         compareReply(message, res, sendMessage)
