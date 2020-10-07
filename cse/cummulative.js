@@ -3,18 +3,50 @@ const fs1 = require('fs');
 const readline1 = require('readline')
 
 function cummul(message, res, sendMessage) {
-    a5.post(sendMessage, {
-        chat_id: message.chat.id,
-        text: `Please send your enrollment number`,
-        reply_markup: {
-            force_reply: true
-        }
-    }).then(respons => {
-        res.end('ok')
-    }).catch(err => {
-        console.log(err)
-        res.end(err)
-    })
+    var MongoClient = require('mongodb').MongoClient;
+    var url = process.env.MONGO_URL;
+
+    MongoClient.connect(url, { useUnifiedTopology: true }, function (err, conn) {
+        if (err) throw err;
+
+        let connected = conn.db('tempHeroku');
+        connected.collection('savedRollNos').findOne({ userId: message.chat.id }, function (err, result) {
+            if (err) throw err;
+
+            if (result === null) {
+                a5.post(sendMessage, {
+                    chat_id: message.chat.id,
+                    text: `No saved enrollment number found. Use /save to save your enrollment number.\n\n`
+                        + `Or reply with your enrollment number to the message below to get your cumulative result.`
+                }).then(respons => {
+                    a5.post(sendMessage, {
+                        chat_id: message.chat.id,
+                        text: `Please send your enrollment number`,
+                        reply_markup: {
+                            force_reply: true
+                        }
+                    }).then(respons => {
+                        conn.close();
+                        res.end('ok');
+                    }).catch(err => {
+                        console.log(err);
+                        res.end(err);
+                    })
+                }).catch(err => {
+                    console.log(err);
+                    res.end(err);
+                })
+            }
+            else {
+                let msg = {
+                    text: result.rollNo,
+                    chat: { id: message.chat.id }
+                }
+                conn.close();
+                cummulData(msg, res, sendMessage, sendPhoto)
+            }
+        });
+    });
 }
 
 function cummulData(message, res, sendMessage, sendPhoto) {
