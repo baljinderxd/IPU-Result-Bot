@@ -2,7 +2,7 @@ const a5 = require('axios')
 const fs1 = require('fs');
 const readline1 = require('readline')
 
-function cummul(message, res, sendMessage) {
+function cummul(message, res, sendMessage, sendPhoto) {
     var MongoClient = require('mongodb').MongoClient;
     var url = process.env.MONGO_URL;
 
