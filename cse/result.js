@@ -4,18 +4,59 @@ const readline = require('readline')
 
 
 function fetch(msg, res, sendMessage) {
+    
+    var MongoClient = require('mongodb').MongoClient;
+    var url = process.env.MONGO_URL;
 
-    a1.post(sendMessage, {
-        chat_id: msg.chat.id,
-        text: 'Please enter your complete enrollment number, give a space and then enter the semester number of which you want your result of.\n' +
-            'Example: 12345678912 4\n' +
-            'This will fetch result of 4th semester for enrollment number 12345678912.'
-    }).then(response => {
-        res.end('ok')
-    }).catch(err => {
-        console.log("Error: ", err)
-        res.end(err)
-    })
+    MongoClient.connect(url, { useUnifiedTopology: true }, function (err, conn) {
+        if (err) throw err;
+
+        let connected = conn.db('tempHeroku');
+        connected.collection('savedRollNos').findOne({ userId: msg.chat.id }, function (err, result) {
+            if (err) throw err;
+
+            if (result === null) {
+                a1.post(sendMessage, {
+                    chat_id: msg.chat.id,
+                    text: 'No saved enrollment number found. Use /save to save your enrollment number.\n\n'
+                        + 'Or send the enrollment number and the semester number separated by a space.\n'
+                        + 'Example: 12345678912 5',
+                    reply_markup: { force_reply: true }
+                }).then(response => {
+                    conn.close();
+                    res.end('ok');
+                }).catch(err => {
+                    console.log("Error: ", err);
+                    res.end(err);
+                });
+            }
+            else {
+                a1.post(sendMessage, {
+                    chat_id: msg.chat.id,
+                    text: `Result for ${result.rollNo} will be sent.\nPlease select the option for which to fetch the result:`,
+                    reply_markup: {
+                        keyboard: [
+                            [
+                                { text: `${result.rollNo} 1` },
+                                { text: `${result.rollNo} 2` }
+                            ],
+
+                            [
+                                { text: `${result.rollNo} 3` },
+                                { text: `${result.rollNo} 4` }
+                            ]
+                        ]
+                    }
+                }).then(response => {
+                    conn.close();
+                    res.end('ok');
+                }).catch(err => {
+                    console.log("Error: ", err);
+                    res.end(err);
+                });
+            }
+        });
+    });
 
 }
 
@@ -259,7 +300,8 @@ function getResult(msg, res, sendMessage, sendAction, sendPhoto) {
             a1.post(sendMessage, {
                 chat_id: msg.chat.id,
                 text: display,
-                parse_mode: 'HTML'
+                parse_mode: 'HTML',
+                reply_markup: { remove_keyboard: true }
             }).then(response => {
                 if (semSubject.length > 0) {
                     a1.post(sendPhoto, {
